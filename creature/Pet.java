@@ -1,14 +1,8 @@
 package creature;
 
-import java.util.*;
-
 public abstract class Pet extends Animal{
 
-    double weight;
-
-    public Pet(String name, String birth) {
-        super(name, birth);
-    }
+    private double weight;
 
     public Pet(String name, String birth, double weight) {
         super(name, birth);
@@ -17,7 +11,6 @@ public abstract class Pet extends Animal{
 
     public Pet(String name, String birth, String... commands) {
         super(name, birth, commands);
-        super.addCommand(Arrays.toString(commands));
     }
 
     public Pet(String name, String birth, double weight, String... command) {
@@ -36,7 +29,7 @@ public abstract class Pet extends Animal{
     @Override
     public String toString() {
         return super.toString() +
-                "weight=" + weight +
+                "weight=" + getWeight() +
                 '}';
     }
 }

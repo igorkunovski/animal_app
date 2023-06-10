@@ -3,14 +3,14 @@ package creature;
 import java.time.LocalDate;
 import java.util.*;
 
-public abstract class Animal {
+abstract class Animal {
     private final String name;
     private final LocalDate birth;
     private final Set<String> commands = new HashSet<>();
 
     public abstract void voice();
 
-    public Animal(String name, String birth) {
+    protected Animal(String name, String birth) {
         this.name = name;
         this.birth = LocalDate.parse(birth);
     }

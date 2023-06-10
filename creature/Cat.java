@@ -2,10 +2,6 @@ package creature;
 
 public class Cat extends Pet{
 
-    public Cat(String name, String birth) {
-        super(name, birth);
-    }
-
     public Cat(String name, String birth, double weight) {
         super(name, birth, weight);
     }
