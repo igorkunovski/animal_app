@@ -29,6 +29,16 @@ public class SupportMethods {
         return chooseNumber();
     }
 
+    public String stringReader() {
+        Scanner sc = new Scanner(System.in);
+            String result = sc.nextLine();
+            if (!result.trim().equals("")) { return result;  }
+        else{
+            System.out.println("String is empty, try again");
+            return stringReader();
+        }
+    }
+
     public Animal animalCreation() {
 
         String name, birth, command;
@@ -87,4 +97,6 @@ public class SupportMethods {
         }
         return null;
     }
+
+
 }
