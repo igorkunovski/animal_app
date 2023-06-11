@@ -3,7 +3,7 @@ package creature;
 import java.time.LocalDate;
 import java.util.*;
 
-abstract class Animal {
+public abstract class Animal {
     private final String name;
     private final LocalDate birth;
     private final Set<String> commands = new HashSet<>();
