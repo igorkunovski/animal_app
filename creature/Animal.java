@@ -10,11 +10,6 @@ public abstract class Animal {
 
     public abstract void voice();
 
-    protected Animal(String name, String birth) {
-        this.name = name;
-        this.birth = LocalDate.parse(birth);
-    }
-
     public Animal(String name, String birth, String... commands) {
         this.name = name;
         this.birth = LocalDate.parse(birth);
@@ -41,8 +36,7 @@ public abstract class Animal {
 
     @Override
     public String toString() {
-        return "name='" + getName() + '\'' +
-                ", birth=" + getBirth() +
-                ", commands=" + getCommands() + ',' + '\'';
+        return "name: " + getName() +
+                "; birth: " + getBirth();
     }
 }

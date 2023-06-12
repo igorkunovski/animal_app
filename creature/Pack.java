@@ -4,11 +4,6 @@ public abstract class Pack extends Animal{
 
     private int liftingCapacity;
 
-    public Pack(String name, String birth, int liftingCapacity) {
-        super(name, birth);
-        this.liftingCapacity = liftingCapacity;
-    }
-
     public Pack(String name, String birth, int liftingCapacity, String... commands) {
         super(name, birth, commands);
         this.liftingCapacity = liftingCapacity;
@@ -24,7 +19,6 @@ public abstract class Pack extends Animal{
 
     @Override
     public String toString() {
-        return super.toString() +
-                "liftingCapacity=" + getLiftingCapacity() + '}';
+        return super.toString() + "; lifting Capacity:" + getLiftingCapacity() + " kg";
     }
 }

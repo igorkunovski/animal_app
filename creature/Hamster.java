@@ -2,14 +2,6 @@ package creature;
 
 public class Hamster extends Pet{
 
-    public Hamster(String name, String birth) {
-        super(name, birth);
-    }
-
-    public Hamster(String name, String birth, double weight) {
-        super(name, birth, weight);
-    }
-
     public Hamster(String name, String birth, double weight, String... command) {
         super(name, birth, weight, command);
     }
@@ -21,8 +13,6 @@ public class Hamster extends Pet{
 
     @Override
     public String toString() {
-        return "Hamster{" +
-                super.toString() +
-                '}';
+        return "Hamster " + super.toString();
     }
 }

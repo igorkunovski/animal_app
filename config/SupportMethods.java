@@ -1,23 +1,14 @@
 package config;
 
-import collection.AnimalsCollection;
+import console.ConsoleView;
 import creature.*;
 import exception.AnimalCreationException;
+import exception.EmptyFieldException;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class SupportMethods {
-
-    private AnimalsCollection animalsCollection;
-
-    public SupportMethods(){
-    }
-
-    public SupportMethods(AnimalsCollection animalsCollection) {
-        this();
-        this.animalsCollection = animalsCollection;
-    }
 
     public int chooseNumber() {
         Scanner sc = new Scanner(System.in);
@@ -31,72 +22,103 @@ public class SupportMethods {
 
     public String stringReader() {
         Scanner sc = new Scanner(System.in);
-            String result = sc.nextLine();
-            if (!result.trim().equals("")) { return result;  }
+        String result = sc.nextLine();
+        if (!result.trim().equals("")) { return result;  }
         else{
-            System.out.println("String is empty, try again");
-            return stringReader();
+            System.out.println("String is empty");
+            return "";
         }
     }
 
-    public Animal animalCreation() {
+    public Animal animalCreation(){
 
         String name, birth, command;
         double weight;
         int liftingCapacity;
 
         Scanner sc = new Scanner(System.in);
-        System.out.println(" Please choose number of Animal to create and press Enter");
-        System.out.println(" 1. Cat, 2. Dog, 3. Hamster, 4. Horse, 5. Camel, 6. Donkey");
+        ConsoleView.choseNumber();
+        int userChoice = sc.nextInt();
 
-        try {
+        if (userChoice > Counter.POSSIBLE_CREATURES || userChoice < 1){
+            ConsoleView.noSuchOption();
+            throw new AnimalCreationException();
+        }
 
-            int userChoice = sc.nextInt();
+        System.out.println("Insert name");
+        name = stringReader();
+        System.out.println("Insert birthdate in format yyyy-mm-dd");
+        birth = stringReader();
+        System.out.println("Insert command it knows");
+        command = stringReader();
 
-            switch (userChoice) {
-                case 1,2,3 -> {
-                    System.out.println("Insert name");
-                    name = sc.next();
-                    System.out.println("Insert birthdate in format yyyy-mm-dd");
-                    birth = sc.next();
-                    System.out.println("Insert weight");
-                    weight = sc.nextDouble();
-                    System.out.println("Insert command it knows");
-                    command = sc.next();
+        switch (userChoice) {
+            case 1,2,3 -> {
+                System.out.println("Insert weight in Double format");
+                weight = getDouble();
 
-                    if (userChoice == 1){
-                        return new Cat(name,birth,weight,command);
-                    } else if (userChoice == 2) {
-                        return new Dog(name,birth,weight,command);
-                    }else return new Hamster(name, birth, weight, command);
+                try (Counter counter = new Counter()) {
+                    if (checkForEmptyData(name, birth, weight, command)) {
+                        counter.add();
+                    }
+                    else {
+                        throw new EmptyFieldException();
+                    }
+                } catch (Exception ignored) {
 
                 }
-                case 4,5,6 -> {
-                    System.out.println("Insert name");
-                    name = sc.next();
-                    System.out.println("Insert birthdate in format yyyy-mm-dd");
-                    birth = sc.next();
-                    System.out.println("Insert lifting capacity");
-                    liftingCapacity = sc.nextInt();
-                    System.out.println("Insert command it knows");
-                    command = sc.next();
-
-                    if (userChoice == 4){
-                        return new Horse(name,birth,liftingCapacity,command);
-                    } else if (userChoice == 5) {
-                        return new Camel(name,birth,liftingCapacity,command);
-                    }else return new Donkey(name, birth, liftingCapacity, command);
-                }
-
-                default ->
-                        System.err.println("Incorrect number, try again");
+                if (userChoice == 1) {
+                    return new Cat(name, birth, weight, command);
+                } else if (userChoice == 2) {
+                    return new Dog(name, birth, weight, command);
+                } else return new Hamster(name, birth, weight, command);
             }
 
-        }catch (AnimalCreationException e){
-            System.err.println(e.getMessage());
+            case 4,5,6 -> {
+
+                System.out.println("Insert lifting capacity in Int");
+                liftingCapacity = chooseNumber();
+
+                try (Counter counter = new Counter()) {
+                    if (checkForEmptyData(name, birth, liftingCapacity, command)) {
+                        counter.add();
+                    }
+                    else {
+                        throw new EmptyFieldException();
+                    }
+                } catch (Exception ignored) {
+
+                }
+
+                if (userChoice == 4){
+                    return new Horse(name,birth,liftingCapacity,command);
+                } else if (userChoice == 5) {
+                    return new Camel(name,birth,liftingCapacity,command);
+                }else return new Donkey(name, birth, liftingCapacity, command);
+            }
+
+            default ->
+                    System.err.println("Incorrect number, try again");
         }
+
         return null;
     }
 
+    private double getDouble() {
+        Scanner sc = new Scanner(System.in);
+        try {
+            return sc.nextDouble();
+        }catch (InputMismatchException e){
+            System.err.println("Incorrect double format is inserted, must be with coma (,)");
+            return -1;
+        }
+    }
 
+
+    private boolean checkForEmptyData(String name, String birth, double weight, String command) {
+        if (name.trim().equals("") || birth.trim().equals("") || weight == -1 || command.trim().equals("")){
+            return false;
+        }
+        return true;
+    }
 }

@@ -2,10 +2,6 @@ package creature;
 
 public class Camel extends Pack{
 
-    public Camel(String name, String birth, int liftingCapacity) {
-        super(name, birth, liftingCapacity);
-    }
-
     public Camel(String name, String birth, int liftingCapacity, String... commands) {
         super(name, birth, liftingCapacity, commands);
     }
@@ -17,7 +13,6 @@ public class Camel extends Pack{
 
     @Override
     public String toString() {
-        return "Camel{" +
-                super.toString() + '}';
+        return "Camel " + super.toString();
     }
 }
