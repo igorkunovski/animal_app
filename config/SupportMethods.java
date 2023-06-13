@@ -58,15 +58,13 @@ public class SupportMethods {
                 weight = getDouble();
 
                 try (Counter counter = new Counter()) {
-                    if (checkForEmptyData(name, birth, weight, command)) {
-                        counter.add();
-                    }
-                    else {
-                        throw new EmptyFieldException();
-                    }
-                } catch (Exception ignored) {
+                    checkForEmptyData(name, birth, weight, command);
+                    counter.add();
 
+                } catch (Exception e) {
+                    throw new AnimalCreationException();
                 }
+
                 if (userChoice == 1) {
                     return new Cat(name, birth, weight, command);
                 } else if (userChoice == 2) {
@@ -80,14 +78,11 @@ public class SupportMethods {
                 liftingCapacity = chooseNumber();
 
                 try (Counter counter = new Counter()) {
-                    if (checkForEmptyData(name, birth, liftingCapacity, command)) {
-                        counter.add();
-                    }
-                    else {
-                        throw new EmptyFieldException();
-                    }
-                } catch (Exception ignored) {
+                    checkForEmptyData(name, birth, liftingCapacity, command);
+                    counter.add();
 
+                } catch (Exception e) {
+                    throw new AnimalCreationException();
                 }
 
                 if (userChoice == 4){
@@ -115,10 +110,18 @@ public class SupportMethods {
     }
 
 
-    private boolean checkForEmptyData(String name, String birth, double weight, String command) {
-        if (name.trim().equals("") || birth.trim().equals("") || weight == -1 || command.trim().equals("")){
-            return false;
+    private void checkForEmptyData(String name, String birth, double weight, String command) {
+
+        if (name.equals("") || birth.equals("") || weight == -1 || command.equals("")){
+            throw new EmptyFieldException();
         }
-        return true;
+    }
+
+    private void checkForEmptyData(String name, String birth, int liftingCapacity, String command) {
+
+        if (name.equals("") || birth.equals("") || liftingCapacity < 0 || command.equals("")){
+            throw new EmptyFieldException();
+        }
+
     }
 }

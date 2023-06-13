@@ -44,8 +44,10 @@ public class UserInterface {
                 }
                 case 5 -> {
                     col.showAnimals();
-                    int num = sm.chooseNumber();
-                    col.removeAnimal(num);
+                    if (col.getAnimals().size() < 1){
+                    } else{
+                        int num = sm.chooseNumber();
+                        col.removeAnimal(num); }
                 }
                 case 6 -> System.out.println("Total generated qty of creatures : " + Counter.getCounter());
             }
